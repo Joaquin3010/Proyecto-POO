@@ -20,7 +20,7 @@ public class SeleccionDeAccion extends JFrame {
         JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 10));
         
 
-        displayLabel = new JLabel("Seleccione a quien le quiere dar una calificación:", SwingConstants.CENTER);
+        displayLabel = new JLabel("Seleccione la accion deseada:", SwingConstants.CENTER);
         panelPrincipal.add(displayLabel, BorderLayout.NORTH);
 
 
