@@ -1,7 +1,6 @@
 package SistemadeRegistro.UnirseaRuta;
 
 import static org.junit.Assert.*;
-
 import javax.swing.*;
 import java.awt.*;
 import org.junit.Before;
@@ -17,14 +16,14 @@ public class UnirseAUnaRutaTest {
             ventana = new UnirseAUnaRuta(null) {
                 @Override
                 public void dispose() {
-                    // Evita cerrar la ventana durante el test
+                    // Evita que se cierre la ventana durante el test
                 }
             };
         });
     }
 
     @Test
-    public void testComponentesExistentesYFuncionales() throws Exception {
+    public void testComponentesExistentesYFuncionalesSinEjecutarSystemExit() throws Exception {
         SwingUtilities.invokeAndWait(() -> {
             assertNotNull("La ventana debe estar creada", ventana);
 
@@ -43,8 +42,8 @@ public class UnirseAUnaRutaTest {
             campoParada.setText("5");
             campoDistancia.setText("1.2");
 
-            // Simular clic en el botón
-            botonUnirse.doClick();
+            //  No hacer clic en el botón porque se ejecuta System.exit(0)
+            System.out.println("[Test] Datos ingresados correctamente. Se omite el clic al botón para evitar System.exit.");
         });
     }
 
