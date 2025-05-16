@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 
+import static org.junit.Assert.*;
+
 public class CalcPrecioGUITest {
     private CalcPrecioGUI gui;
 
@@ -18,13 +20,13 @@ public class CalcPrecioGUITest {
     @Test
     public void testCalculoConDatosValidos() throws InvocationTargetException, InterruptedException {
         SwingUtilities.invokeAndWait(() -> {
-            Component[] components = gui.getContentPane().getComponents();
             JTextField distanciaField = null;
             JTextField rendimientoField = null;
             JButton calcularButton = null;
+            JLabel resultadoLabel = null;
 
             // Buscar los componentes necesarios
-            for (Component comp : components) {
+            for (Component comp : gui.getContentPane().getComponents()) {
                 if (comp instanceof JTextField) {
                     if (distanciaField == null) {
                         distanciaField = (JTextField) comp;
@@ -33,17 +35,27 @@ public class CalcPrecioGUITest {
                     }
                 } else if (comp instanceof JButton) {
                     calcularButton = (JButton) comp;
+                } else if (comp instanceof JLabel) {
+                    JLabel lbl = (JLabel) comp;
+                    if (lbl.getText().toLowerCase().contains("precio") || lbl.getText().contains("$")) {
+                        resultadoLabel = lbl;
+                    }
                 }
             }
 
             // Ingresar datos válidos
-            if (distanciaField != null) distanciaField.setText("100");
-            if (rendimientoField != null) rendimientoField.setText("10");
+            assertNotNull("Campo distancia no encontrado", distanciaField);
+            assertNotNull("Campo rendimiento no encontrado", rendimientoField);
+            distanciaField.setText("100");
+            rendimientoField.setText("10");
 
             // Simular clic
-            if (calcularButton != null) {
-                calcularButton.doClick();
-            }
+            assertNotNull("Botón calcular no encontrado", calcularButton);
+            calcularButton.doClick();
+
+            // Verificar que el resultado sea correcto
+            assertNotNull("Etiqueta de resultado no encontrada", resultadoLabel);
+            assertTrue("El resultado debe contener '100'", resultadoLabel.getText().contains("100"));
         });
     }
 
